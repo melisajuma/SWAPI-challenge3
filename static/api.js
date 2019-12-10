@@ -1,10 +1,9 @@
-$( document ).ready(function(){
-    $ajax({
-        method:"GET",
-        url: "https://swapi.co/api/people/",
-        
-    }).done(function(data){
-        console.log(data)
-
+const people=()=>{
+    fetch("https://swapi.co/api/people/")
+    .then((data)=>{
+        let results=data.Results
+        console.log(results)
     })
-})
+}
+
+people()
