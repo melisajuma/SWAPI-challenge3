@@ -6,4 +6,8 @@ const people=()=>{
     })
 }
 
+<<<<<<< HEAD
 people()
+=======
+people()
+>>>>>>> origin/master
