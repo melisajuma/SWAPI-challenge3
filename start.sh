@@ -1,0 +1,2 @@
+export SECRET_KEY='KJKSJOAJKJALKFF9893853JKDGHA'
+python manage.py server
