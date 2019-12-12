@@ -4,6 +4,7 @@ from ..requests import get_people, get_person
 import os
 
 
+
 @main.route('/')
 def index():
     '''
@@ -20,6 +21,5 @@ def person(source):
     '''
     result = get_person(source)
     title = result.name
-    print (title)
     response = make_response(render_template('profile.html', title = title, result = result))
     return response

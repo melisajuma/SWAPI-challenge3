@@ -1,15 +1,18 @@
 {% import 'macros.html' as macros %}
 <!doctype html>
 <html lang="en">
-
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
+    
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"> -->
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/effects.css')}}">
     {% if title %}
     <title>{{title}}</title>
     {% else %}
@@ -17,44 +20,100 @@
     {% endif %}
 </head>
 
-<body>
+<body style="margin:0px; padding: 0px; height:100%; width: 100%; background-image: linear-gradient(to top, rgba(0,0,0,0.1), rgba(255,255,255,0.7));;">
     <style>
+        h1{
+            text-align: center;
+        }
+        .card.text-center{
+            float: left;
+            margin: 20px; 
+            width: 400px;
+            border: 0px;
+            background-image: linear-gradient(to right, rgba(255,145,45,0.1), rgba(255,0,210,0.4));
+        }
+        .contained, #iLike{
+            align-content: center;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-flex-wrap: wrap;
+            flex-wrap: wrap;
+        }
+        .ard-footer.text-muted{
+            width: 100%;
+            display: inline-block;
+        }
+        .fa-contain{
+            width: 100%/3;
+        }
     </style>
     {% block navbar %}
     {% include 'navbar.html' %}
     {% endblock %}
     <h1>Star Wars App</h1>
+    <hr>
+    <div id="iLike">
 
-    <div class="container">
-        <div class="row">
-            {% for item in people %}
-            <div class="card text-center" style="margin: 20px; width: 400px;">
-                <div class="card-header">{{item.name}}</div>
-                <div class="card-body">
-                    <p class="card-text">Eye color : {{item.eye_color}}</p>
-                    <p class="card-text">Skin color : {{item.skin_color}}</p>
-                    <a href="/person/{{item.url}}" class="btn btn-primary" style="width: 80%;">More on {{item.name}}</a>
-                </div>
-                <div class="card-footer text-muted">
-                    2 days ago
+    </div>
+    <br>
+    <div class="contained" id="contained">
+        {% for item in people %}
+        <div class="card text-center" id="id{{item.url}}">
+            <div class="card-header">{{item.name}}</div>
+            <div class="card-body">
+                <p class="card-text">Eye color : {{item.eye_color}}</p>
+                <p class="card-text">Skin color : {{item.skin_color}}</p>
+            </div>
+            <div class="card-footer text-muted">
+                <div class="container">
+                    <div class="row">
+                        <div class="fa-contain col-sm-4">
+                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Like">
+                                <i onclick="like('like{{item.url}}','id{{item.url}}')" class="far fa-heart" style="color: red" id="like{{item.url}}"></i>
+                            </span>
+                        </div>
+                        <div class="fa-contain col-sm-4">
+                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Add to Favourites">
+                                <i onclick="add('{{item.url}}')" class="fas fa-plus"style="color: #20c997;"></i>
+                            </span>
+                        </div>
+                        <div class="fa-contain col-sm-4">
+                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Delete">
+                                <i onclick="del('id{{item.url}}')" class="fas fa-archive"style="color: grey;"></i>
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
-            {% endfor %}
         </div>
+        {% endfor %}
     </div>
+        
 
 
+    <script type="text/javascript">
+        const like = (path) => {
+            let data = document.getElementById(path);
+            let classes = data.classList.value.split(' ');
+            if (classes.find(element => element == 'fas')){
+                data.classList.remove('fas');
+                data.classList.add('far');
+            } else {
+                data.classList.remove('far');
+                data.classList.add('fas');
+            };
+        };
+
+        const del = (path) => {
+            let data = document.getElementById(path);
+            data.classList.add('hide');
+        };
+    </script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
+    <script type="text/javascript" src="../static/js/api.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>
 
 </html>

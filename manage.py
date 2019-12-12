@@ -18,4 +18,9 @@ def test():
     
 
 if __name__ == "__main__":
-    manager.run()
+    try:
+        manager.run()
+        if ConnectionError:
+            print('connection error')
+    except ConnectionError:
+        print('connection error')

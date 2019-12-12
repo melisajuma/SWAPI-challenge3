@@ -3,7 +3,6 @@ import os
 class Config:
     '''
     '''
-    BASE_URL = 'https://swapi.co/api/people/'
     SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
